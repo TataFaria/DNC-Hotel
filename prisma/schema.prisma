@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+//Toda model começa com letra maiúscula e no singular
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  role Role @default(USER)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+//Para criar o banco de dados e ele ficar no padrã quado for criado
+// é usado o @@map("nome da tabela")
